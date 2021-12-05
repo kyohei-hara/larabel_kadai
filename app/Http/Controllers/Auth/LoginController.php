@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreLoginForm;
+use App\Models\OnlineMember;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+
 
 class LoginController extends Controller
 {
@@ -18,8 +22,25 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
     use AuthenticatesUsers;
+
+    public function login(StoreLoginForm $request)
+    {
+      $message = '';
+      if ($request->isMethod('POST')) {
+        $member_no = $request->input('member_no');
+        $password = $request->input('pass');
+        if ($member=OnlineMember::where(['MEMBER_NO' => $member_no,'PASSWORD' => $password, 'DELETE_FLG' => 0])->first()) {
+          Auth::login($member);
+          return view('test.test');
+        } else {
+          $message = 'ログインに失敗しました。';
+        }
+      }
+      return view('auth/login',[
+        'message' => $message
+      ]);
+    }
 
     /**
      * Where to redirect users after login.

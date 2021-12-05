@@ -9,7 +9,7 @@ $factory->define(OnlineMember::class, function (Faker $faker) {
     return [
         //
         'MEMBER_NO'=> 00000000001,
-        'PASSWORD'=> "PASSWORD",
+        'PASSWORD'=> "pass1",
         'NAME'=> $faker->unique()->name,
         'AGE'=> 20,
         'TEL'=> "00000000000",

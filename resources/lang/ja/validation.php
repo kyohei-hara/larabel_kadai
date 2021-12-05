@@ -116,6 +116,9 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'pass'=> 'パスワード',
+        'member_no'=> '会員No',
+    ],
 
 ];

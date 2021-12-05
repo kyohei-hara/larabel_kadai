@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'users',
+        'passwords' => 'online_member',
     ],
 
     /*
@@ -38,12 +38,12 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'online_member',
         ],
 
         'api' => [
             'driver' => 'token',
-            'provider' => 'users',
+            'provider' => 'online_member',
             'hash' => false,
         ],
     ],
@@ -66,9 +66,9 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'online_member' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => App\Models\OnlineMember::class,
         ],
 
         // 'users' => [
@@ -94,8 +94,8 @@ return [
 
     'passwords' => [
         'users' => [
-            'provider' => 'users',
-            'table' => 'password_resets',
+            'provider' => 'member',
+            'table' => 'online_member',
             'expire' => 60,
             'throttle' => 60,
         ],
