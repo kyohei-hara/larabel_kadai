@@ -10962,3 +10962,8 @@ a.text-dark:focus {
   }
 }
 
+.content-center {
+  display: block;
+  text-align: center;
+}
+

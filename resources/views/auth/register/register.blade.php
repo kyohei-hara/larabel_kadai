@@ -9,7 +9,7 @@
                 <div class="card-header">会員情報</div>
 
                 <div class="card-body">
-                    <form method="POST" action="/confirm">
+                    <form method="POST" action="{{ route('user.register_post') }}">
                         @csrf
 
                         <div class="form-group row">
@@ -131,7 +131,7 @@
                                     登録
                                 </button>
 
-                                <button type="button" onClick="cleare()" class="btn btn-light">
+                                <button type="button" onClick="history.back()" class="btn btn-light">
                                     戻る
                                 </button>
 

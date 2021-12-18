@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
 use DateTime;
+
 class RegisterController extends Controller
 {
     /*
@@ -106,9 +107,7 @@ class RegisterController extends Controller
         $request->session()->forget("form_input");
         // 登録データーでログイン
         Auth::login($user);
-        return view('test.test');
-        // return $this->registered($request, $user)
-        //     ?  : redirect($this->redirectPath());
+        return $this->complete(true);
     }
 
     /**
@@ -156,7 +155,7 @@ class RegisterController extends Controller
 
         //セッションに値が無い時はフォームに戻る
         if (!$input) {
-            return redirect()->action("Auth\RegisterController");
+            return route("login");
         }
 
         return view('auth.register.confirm', ["input" => $input]);
@@ -165,8 +164,9 @@ class RegisterController extends Controller
     /*
      * 完了画面出力
      */
-    public function complete()
+    public function complete($isRegister = false)
     {
-        return view('auth.register.complete');
+        if($isRegister) return view('auth.register.complete');
+        return route('home');
     }
 }

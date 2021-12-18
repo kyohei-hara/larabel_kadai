@@ -11,24 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/login',function () {
     return view('auth/login');
-});
-
-Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('user.resister_show');
-Route::post('confirm', 'Auth\RegisterController@post')->name('user.resister_post');
+})->name('login');
+Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('confirm', 'Auth\RegisterController@post')->name('user.register_post');
 Route::get('register/confirm', 'Auth\RegisterController@confirm')->name('user.register_confirm');
-Route::post('register/confirm', 'Auth\RegisterController@register')->name('user.resister_resister');
-Route::get('register/complete', 'Auth\RegisterController@complete')->name('user.register_complete');
+Route::post('register/confirm', 'Auth\RegisterController@register')->name('user.register_register');
+Route::get('register/complete', 'Auth\RegisterController@complete')->name('user.register_complete')->middleware(['auth']);
 
-Route::group(['prefix' => 'test', 'middleware' => 'auth'],function(){
-    Route::get('/index', function() {
-        return view('test/test');
-    })->name('test');
-});
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

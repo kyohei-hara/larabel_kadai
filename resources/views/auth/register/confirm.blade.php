@@ -9,7 +9,7 @@
                 <div class="card-header">会員情報</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('user.resister_resister') }}">
+                    <form method="POST" action="{{ route('user.register_register') }}">
                         @csrf
                         <table class="table table-striped">
                             <tr>

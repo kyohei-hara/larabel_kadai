@@ -32,7 +32,7 @@ class LoginController extends Controller
         $password = $request->input('pass');
         if ($member=OnlineMember::where(['MEMBER_NO' => $member_no,'PASSWORD' => $password, 'DELETE_FLG' => 0])->first()) {
           Auth::login($member);
-          return view('test.test');
+          return route('home');
         } else {
           $message = 'ログインに失敗しました。';
         }
