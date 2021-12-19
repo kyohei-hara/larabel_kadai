@@ -13,7 +13,7 @@
                             @guest
                                 <a class="content-center" href="{{ route("register") }}">新規会員登録</a>
                             @endguest
-                            <a class="content-center" href="{{ route("register") }}">商品検索</a>
+                            <a class="content-center" href="{{ route("product") }}">商品検索</a>
                             <a class="content-center" href="{{ route("register") }}">お買い物かご</a>
                             <br />
                             @guest

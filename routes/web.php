@@ -21,5 +21,7 @@ Route::post('confirm', 'Auth\RegisterController@post')->name('user.register_post
 Route::get('register/confirm', 'Auth\RegisterController@confirm')->name('user.register_confirm');
 Route::post('register/confirm', 'Auth\RegisterController@register')->name('user.register_register');
 Route::get('register/complete', 'Auth\RegisterController@complete')->name('user.register_complete')->middleware(['auth']);
+Route::get('product/index', 'OnlineProductController@index')->name('product');
+
 
 Auth::routes();

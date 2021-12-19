@@ -66,6 +66,7 @@ return [
     ],
     'not_in'               => ':attributeには:valuesのうちいずれとも異なる値を指定してください。',
     'numeric'              => ':attributeは半角数値で入力してください。',
+    'null_numeric'              => ':attributeは半角数値で入力してください。',
     'present'              => ':attributeには現在時刻を指定してください。',
     'regex'                => '正しい形式の:attributeを指定してください。',
     'required'             => ':attributeは必ず入力してください。',
@@ -90,7 +91,7 @@ return [
     'zip'                  => ':attributeはXXX-XXXXの形式で入力してください',
     'positive'             => ':attributeには正の数で入力してください。',
     'num_hyphen'           => ':attributeは半角数字とハイフンで入力してください。',
-
+    'comparison'           => ':attributeは金額下限より大きい値を入力してください。',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -128,6 +129,8 @@ return [
         'zip'=> '郵便番号',
         'address'=> '住所',
         'tell'=> '電話番号',
+        'max'=>'金額上限',
+        'min'=>'金額下限',
     ],
 
 ];
