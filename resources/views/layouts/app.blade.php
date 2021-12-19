@@ -44,7 +44,7 @@
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             <li class="nav-item">
-                                <span>{{ date('Y/m/d h:m') }}</span>
+                                <span>{{ date('Y/m/d h:i') }}</span>
                             </li>
                             <li class="nav-item">
                                 <span>「ゲスト」さん</span>
@@ -56,7 +56,7 @@
                             @endif --}}
                         @else
                             <li class="nav-item">
-                                <span>{{ date('Y/m/d h:m') }}</span>
+                                <span>{{ date('Y/m/d h:i') }}</span>
                             </li>
                             <li class="nav-item">
                                 <span>{{ Auth::user()->NAME }}</span>
