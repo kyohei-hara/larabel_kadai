@@ -32,14 +32,14 @@ class LoginController extends Controller
         $password = $request->input('pass');
         if ($member=OnlineMember::where(['MEMBER_NO' => $member_no,'PASSWORD' => $password, 'DELETE_FLG' => 0])->first()) {
           Auth::login($member);
-          return route('home');
+          return redirect()->action('HomeController@index');
         } else {
           $message = 'ログインに失敗しました。';
+          return view('auth/login',[
+            'message' => $message
+          ]);
         }
       }
-      return view('auth/login',[
-        'message' => $message
-      ]);
     }
 
     /**

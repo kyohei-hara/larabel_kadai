@@ -131,10 +131,11 @@
                                     登録
                                 </button>
 
-                                <button type="button" onClick="history.back()" class="btn btn-light">
-                                    戻る
-                                </button>
-
+                                <a href="{{ route("home") }}">
+                                    <button type="button" onClick="history.back()" class="btn btn-light">
+                                        戻る
+                                    </button>
+                                </a>
                                 <button type="button" onClick="cleare()" class="btn btn-light">
                                     クリア
                                 </button>

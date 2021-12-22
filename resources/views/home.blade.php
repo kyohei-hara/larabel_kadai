@@ -14,12 +14,14 @@
                                 <a class="content-center" href="{{ route("register") }}">新規会員登録</a>
                             @endguest
                             <a class="content-center" href="{{ route("product") }}">商品検索</a>
-                            <a class="content-center" href="{{ route("register") }}">お買い物かご</a>
+                            <a class="content-center" href="{{ route("product.cart") }}">お買い物かご</a>
                             <br />
                             @guest
-                                <button style="margin:0 auto" onclick="{{ route("login") }}" class="btn btn-primary content-center">
-                                    ログイン
-                                </button>
+                                <a href="{{ route("login") }}">
+                                    <button style="margin:0 auto" class="btn btn-primary content-center">
+                                        ログイン
+                                    </button>
+                                </a>
                             @else
                                 <button style="margin:0 auto" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-danger content-center">
                                     ログアウト
