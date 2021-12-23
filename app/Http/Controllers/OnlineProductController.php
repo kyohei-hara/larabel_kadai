@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 
 class OnlineProductController extends Controller
 {
+
+
+    public $MSG006 = '商品を選択してください。';
+    public $MSG007 = '購入数は1～999の数値で入力してください。';
     /**
      * Display a listing of the resource.
      *
@@ -116,7 +120,7 @@ class OnlineProductController extends Controller
          * １件も選択されていない場合早期return
          */
         if($productsChecked == null || count($productsChecked) == 0) {
-            return returnView($request,"商品を選択してください。");
+            return returnView($request,$this->MSG006);
         };
         /**
          * チェックした商品一覧に個数が入っていないものをチェック
@@ -126,7 +130,7 @@ class OnlineProductController extends Controller
             $name = $value."Quantity";
             $getQuantity = $request->input($name);
             if($getQuantity == null || !is_numeric($getQuantity) || $getQuantity == 0 || $getQuantity > 999) {
-               return returnView($request,"購入数は1～999の数値で入力してください。");
+               return returnView($request, $this->MSG007);
             }
             $getQuantityList[$value] = $getQuantity;
         };
@@ -174,19 +178,52 @@ class OnlineProductController extends Controller
         ]);
 
     }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function show(Request $request, $id)
     {
-        // $contact = ContactForm::find($id);
-        // $contact->delete();
+        $has_session = $request->session()->has(Auth::user()->MEMBER_NO);
+        if(!$has_session){
+            $request ->session()->put(Auth::user()->MEMBER_NO, array());
+        }
+        $product = OnlineProduct::find($id);
+        return view('product.show', compact('product'));
 
-        return redirect('contact/index');
+    }
 
+    public function add(Request $request, $id)
+    {
+        $query = DB::table('online_product');
+        $value = $request->input("quantity");
+        if($value == null || !is_numeric($value) || $value == 0 || $value > 999) {
+             return redirect("product/show/".$id)->with([
+                 "message"=>$this->MSG007
+             ])->withInput();
+        }
+        $purchaseList = array();
+        /**
+         * 商品一覧が購入できるか判定
+         */
+        $userSession = $request->session()->get(Auth::user()->MEMBER_NO);
+        if($userSession != null) {
+            $purchaseList = $userSession;
+        }
+        $quantity = 0;
+
+        if(isset($purchaseList[$id])) {
+            $quantity = $purchaseList[$id];
+        };
+        $quantity = $quantity + $value;
+        $query = DB::table('online_product');
+        $result = $query->where('PRODUCT_CODE', $id)->where('STOCK_COUNT', ">" , $quantity)->get();
+
+        if(count($result) == 0) {
+            return redirect("product/show/".$id)->with([
+                 "message"=>"購入数が在庫数量を超えています。"
+             ])->withInput();
+        };
+        $purchaseList[$id] = $quantity;
+        $request->session()->put(Auth::user()->MEMBER_NO, $purchaseList);
+
+        return redirect()->action("OnlineProductController@confirm");
     }
 
     public function __construct()

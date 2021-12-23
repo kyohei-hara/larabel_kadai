@@ -25,6 +25,8 @@ Route::group(['prefix' => 'product', 'middleware' => 'auth'],function(){
     Route::get('index', 'OnlineProductController@index')->name('product');
     Route::post('index', 'OnlineProductController@stock')->name('product.stock');
     Route::get('cart', 'OnlineProductController@confirm')->name('product.cart');
+    Route::get('show/{id}', 'OnlineProductController@show')->name('product.show');
+    Route::post('add/{id}', 'OnlineProductController@add')->name('product.add');
 });
 
 

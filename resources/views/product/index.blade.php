@@ -70,7 +70,11 @@
                                     <button type="submit" name="search" value="search" class="btn btn-primary">
                                         検索
                                     </button>
-
+                                    <a href="{{ route("home") }}">
+                                        <button type="button" class="btn btn-light">
+                                            戻る
+                                        </button>
+                                    </a>
                                     <button type="button" onclick="cleare()" class="btn btn-light">
                                         クリア
                                     </button>
@@ -87,7 +91,9 @@
             @csrf
                 <div class="col-md-16">
                     @if(isset($erred))
-                        {{ $erred }}
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $erred }}</strong>
+                        </span>
                     @endif
                     <div class="card">
                         <div class="card-header">商品一覧</div>
@@ -112,7 +118,11 @@
                                                 <input type="checkbox" name="check[]" value="{{ $product->PRODUCT_CODE }}" />
                                             </td>
                                             <td>{{ $product->PRODUCT_CODE }}</td>
-                                            <td>{{ $product->PRODUCT_NAME }}</td>
+                                            <td>
+                                                <a href="{{ route('product.show', ['id' => $product->PRODUCT_CODE ] ) }}">
+                                                    {{ $product->PRODUCT_NAME }}
+                                                </a>
+                                            </td>
                                             <td>{{ $product->MAKER}}</td>
                                             <td style="text-align: right">￥{{ number_format($product->UNIT_PRICE)}}</td>
                                             <td>{{ mb_strimwidth( $product->MEMO, 0, 40, '・・・', 'UTF-8' )}}</td>

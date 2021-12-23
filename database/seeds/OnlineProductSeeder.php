@@ -12,8 +12,8 @@ class OnlineProductSeeder extends Seeder
      */
     public function run()
     {
-        factory(OnlineProduct::class, 10)->states('snack')->create();
-        factory(OnlineProduct::class, 10)->states('chocolate')->create();
-        factory(OnlineProduct::class, 10)->states('candy')->create();
+        factory(OnlineProduct::class, 15)->states('snack')->create();
+        factory(OnlineProduct::class, 15)->states('chocolate')->create();
+        factory(OnlineProduct::class, 15)->states('candy')->create();
     }
 }
