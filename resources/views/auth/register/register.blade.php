@@ -45,13 +45,13 @@
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control @error('password_confirm') is-invalid @enderror" name="password_confirm" required autocomplete="new-password">
-                            </div>
 
-                             @error('password_confirm')
+                                @error('password_confirm')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                            </div>
                         </div>
 
                         <div class="form-group row">
@@ -102,15 +102,14 @@
                             <label for="address" class="col-md-4 col-form-label text-md-right">住所</label>
 
                             <div class="col-md-6">
-                                <textarea id="address" name="address" class="md-textarea form-control" rows="3">{{ old('address') }}</textarea>
-                                @error('address')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                <textarea id="address" name="address" class="md-textarea form-control {{ $errors->has('address') ? ' is-invalid' : '' }}" rows="3">{{ old('address') }}</textarea>
+                                 @if ($errors->has('address'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('address') }}</strong>
                                     </span>
-                                @enderror
+                                @endif
                             </div>
                         </div>
-
                         <div class="form-group row">
                             <label for="tell" class="col-md-4 col-form-label text-md-right">電話番号</label>
 

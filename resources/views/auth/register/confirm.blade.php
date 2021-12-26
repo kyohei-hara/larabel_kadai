@@ -25,7 +25,7 @@
                             </tr>
                             <tr>
                                 <th>性別</th>
-                                <td>{{ $input["sex"] === 'M' ? '男' : '女'}}</td>
+                                <td>{{ $input["sex"] === 'M' ? '男性' : '女性'}}</td>
                                 <input type="hidden" name="sex" value="{{ $input["sex"] }}">
                             </tr>
                             <tr>

@@ -41,9 +41,6 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            <li class="nav-item">
                                 <span>{{ date('Y/m/d H:i') }}</span>
                             </li>
                             <li class="nav-item">

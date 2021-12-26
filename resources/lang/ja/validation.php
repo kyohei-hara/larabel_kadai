@@ -121,6 +121,7 @@ return [
     */
 
     'attributes' => [
+        'name'=>'氏名',
         'pass'=> 'パスワード',
         'password'=> 'パスワード',
         'password_confirm'=> '確認用パスワード',

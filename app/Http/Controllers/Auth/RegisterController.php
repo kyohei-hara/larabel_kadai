@@ -73,7 +73,7 @@ class RegisterController extends Controller
      */
     protected function post(Request $request)
     {
-        $formItems=['name', 'password','age','sex','zip','address','tell'];
+        $formItems=['name', 'password', 'password_confirm' ,'age','sex','zip','address','tell'];
         $this->validator($request->all())->validate();
 
         $input = $request->only($formItems);

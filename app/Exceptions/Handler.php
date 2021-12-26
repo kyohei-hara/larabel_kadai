@@ -37,7 +37,7 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
-        parent::report($exception);
+        return response()->view("errors.common");
     }
 
     /**
@@ -51,7 +51,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        return response()->view("errors.common");
     }
 
     protected function renderHttpException(HttpExceptionInterface $e){
