@@ -44,37 +44,17 @@
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             <li class="nav-item">
-                                <span>{{ date('Y/m/d h:i') }}</span>
+                                <span>{{ date('Y/m/d H:i') }}</span>
                             </li>
                             <li class="nav-item">
                                 <span>「ゲスト」さん</span>
                             </li>
-                            {{-- @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif --}}
                         @else
                             <li class="nav-item">
-                                <span>{{ date('Y/m/d h:i') }}</span>
+                                <span>{{ date('Y/m/d H:i') }}</span>
                             </li>
                             <li class="nav-item">
-                                <span>{{ Auth::user()->NAME }}</span>
-                            </li>
-
-                            <li class="nav-item dropdown">
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
+                                <span>「{{ Auth::user()->NAME }}」</span>
                             </li>
                         @endguest
                     </ul>

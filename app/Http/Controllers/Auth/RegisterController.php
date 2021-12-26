@@ -118,10 +118,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $memberNo = 0;
         //MEMBER_NOの最大の値を取得
         $newMemberNo = DB::table('online_member')->get('MEMBER_NO')->sortByDesc('MEMBER_NO')->first();
+        if($newMemberNo != null) {
+            $memberNo = $newMemberNo->MEMBER_NO;
+        }
         return OnlineMember::create([
-            'MEMBER_NO' => $newMemberNo->MEMBER_NO + 1,
+            'MEMBER_NO' => $memberNo + 1,
             'NAME' => $data['name'],
             'PASSWORD' => $data['password'],
             'AGE' => $data['age'],

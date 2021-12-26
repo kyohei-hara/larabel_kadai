@@ -66,6 +66,7 @@ class ValidatorServiceProvider extends ServiceProvider
             'comparison',
             function ($attribute, $value, $parameters, $validator) {
                 $min = $validator->getData()[$parameters[0]];
+                if($value === null) return true;
                 if($min === null) return true;
                 if(!is_numeric($min)) return true;
                 if($min <= $value) return true;

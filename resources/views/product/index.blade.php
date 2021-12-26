@@ -18,10 +18,10 @@
 
                                 <div class="col-md-6">
                                     <select name="category" id="category" class="form-control">
-                                        <option value="ALL" @if( $category == "ALL" || $category == null ) selected @endif>全て</option>
-                                        <option value="1" @if( $category == 1 ) selected @endif>スナック</option>
-                                        <option value="2" @if( $category == 2 ) selected @endif>チョコレート</option>
-                                        <option value="3" @if( $category == 3 ) selected @endif>飴</option>
+                                        <option value="ALL" @if( old('category') == "ALL" || old('category') == null ||$category == "ALL") selected @endif>全て</option>
+                                        <option value="1" @if( old('category') == 1 ||$category == 1) selected @endif>スナック</option>
+                                        <option value="2" @if( old('category') == 2 ||$category == 2) selected @endif>チョコレート</option>
+                                        <option value="3" @if( old('category') == 3 ||$category == 3) selected @endif>飴</option>
                                     </select>
                                 </div>
                             </div>
@@ -29,21 +29,21 @@
                                 <label for="PRODUCT_NAME" class="col-md-4 col-form-label text-md-right">商品名</label>
 
                                 <div class="col-md-6">
-                                    <input id="PRODUCT_NAME" type="text" class="form-control @error('PRODUCT_NAME') is-invalid @enderror" name="PRODUCT_NAME" value="{{ $PRODUCT_NAME }}" autocomplete="PRODUCT_NAME" autofocus>
+                                    <input id="PRODUCT_NAME" type="text" class="form-control @error('PRODUCT_NAME') is-invalid @enderror" name="PRODUCT_NAME" value="{{ isset($PRODUCT_NAME) ? $PRODUCT_NAME : old('PRODUCT_NAME') }}" autocomplete="PRODUCT_NAME" >
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="MAKER" class="col-md-4 col-form-label text-md-right">販売元</label>
 
                                 <div class="col-md-6">
-                                    <input id="MAKER" type="text" class="form-control @error('MAKER') is-invalid @enderror" name="MAKER" value="{{ $MAKER }}" autocomplete="MAKER" autofocus>
+                                    <input id="MAKER" type="text" class="form-control @error('MAKER') is-invalid @enderror" name="MAKER" value="{{ isset($MAKER) ? $MAKER : old('MAKER') }}" autocomplete="MAKER" >
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="max" class="col-md-4 col-form-label text-md-right">金額上限</label>
 
                                 <div class="col-md-6">
-                                    <input id="max" type="text" class="form-control @error('max') is-invalid @enderror" name="max" value="{{ $max }}" autocomplete="max" autofocus style="text-align:right">
+                                    <input id="max" type="text" class="form-control @error('max') is-invalid @enderror" name="max" value="{{ isset($max) ? $max : old('max') }}" autocomplete="max"  style="text-align:right">
 
                                     @error('max')
                                         <span class="invalid-feedback" role="alert">
@@ -56,7 +56,7 @@
                                 <label for="min" class="col-md-4 col-form-label text-md-right">金額下限</label>
 
                                 <div class="col-md-6">
-                                    <input id="min" type="text" class="form-control @error('min') is-invalid @enderror" name="min" value="{{ $min }}" autocomplete="min" autofocus style="text-align:right">
+                                    <input id="min" type="text" class="form-control @error('min') is-invalid @enderror" name="min" value="{{ isset($min) ? $min : old('min') }}" autocomplete="min"  style="text-align:right">
 
                                     @error('min')
                                         <span class="invalid-feedback" role="alert">
@@ -90,9 +90,9 @@
             <form method="POST" action="{{ route('product') }}">
             @csrf
                 <div class="col-md-16">
-                    @if(isset($erred))
+                    @if(session('erred'))
                         <span class="text-danger" role="alert">
-                            <strong>{{ $erred }}</strong>
+                            <strong>{{ session('erred') }}</strong>
                         </span>
                     @endif
                     <div class="card">
@@ -115,7 +115,7 @@
                                     @foreach($products as $product)
                                         <tr>
                                             <td scope="row">
-                                                <input type="checkbox" name="check[]" value="{{ $product->PRODUCT_CODE }}" />
+                                                <input type="checkbox" name="check[]" value="{{ $product->PRODUCT_CODE }}" {{ is_array(old("check")) && in_array($product->PRODUCT_CODE, old("check"), true)? 'checked="checked"' : '' }}/>
                                             </td>
                                             <td>{{ $product->PRODUCT_CODE }}</td>
                                             <td>
@@ -127,7 +127,7 @@
                                             <td style="text-align: right">￥{{ number_format($product->UNIT_PRICE)}}</td>
                                             <td>{{ mb_strimwidth( $product->MEMO, 0, 40, '・・・', 'UTF-8' )}}</td>
                                             <td>
-                                                <input type="number" name="{{ $product->PRODUCT_CODE }}Quantity" style="text-align:right" />
+                                                <input type="number" name="{{ $product->PRODUCT_CODE }}Quantity" style="text-align:right" value="{{ old($product->PRODUCT_CODE."Quantity") }}" />
                                             </td>
                                         </tr>
                                     @endforeach
@@ -148,3 +148,18 @@
         </div>
     </div>
 @endsection
+
+<script>
+    function cleare () {
+        const category = document.getElementById("category");
+        const PRODUCT_NAME = document.getElementById("PRODUCT_NAME");
+        const MAKER = document.getElementById("MAKER");
+        const min = document.getElementById("min");
+        const max = document.getElementById("max");
+        category.value="ALL"
+        PRODUCT_NAME.value="";
+        MAKER.value="";
+        max.value="";
+        min.value="";
+    }
+</script>
