@@ -8,8 +8,6 @@ use App\Models\OnlineMember;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
-
-
 class LoginController extends Controller
 {
     /*
@@ -32,14 +30,17 @@ class LoginController extends Controller
         $password = $request->input('pass');
         if ($member=OnlineMember::where(['MEMBER_NO' => $member_no,'PASSWORD' => $password, 'DELETE_FLG' => 0])->first()) {
           Auth::login($member);
-          return route('home');
+          if(strpos(url()->previous(),"product/purchase") != false){
+              return redirect()->route("product.confirm");
+          }
+          return redirect()->action('HomeController@index');
         } else {
           $message = 'ログインに失敗しました。';
+          return view('auth/login',[
+            'message' => $message
+          ]);
         }
       }
-      return view('auth/login',[
-        'message' => $message
-      ]);
     }
 
     /**
