@@ -30,17 +30,37 @@ class OnlineProductController extends Controller
         }
         $search = $request->input('search');
         $query = OnlineProduct::Select('PRODUCT_CODE', 'CATEGORY_ID', 'PRODUCT_NAME', 'MAKER', 'UNIT_PRICE' , 'MEMO');
+
         $name = null;
         $maker = null;
         $max = null;
         $min = null;
         $category = null;
-        if($search !== null){
+        $isSearch = null;
+        $page = $request->input('page');
+        if($page !== null) {
+            $name = $request->session()->get("search_name");
+            $maker = $request->session()->get("search_maker");
+            $max = $request->session()->get("search_max");
+            $min = $request->session()->get("search_min");
+            $category = $request->session()->get("search_category");
+            $request->session()->put("page",$page);
+        } else {
+            $request->session()->put("page",null);
+        }
+        if($search !== null) {
             $name = $request->input('PRODUCT_NAME');
             $maker = $request->input('MAKER');
             $max = $request->input('max');
             $min = $request->input('min');
             $category = $request->input('category');
+            $request->session()->put("search_name",$name);
+            $request->session()->put("search_maker",$maker);
+            $request->session()->put("search_max",$max);
+            $request->session()->put("search_min",$min);
+            $request->session()->put("search_category",$category);
+        }
+        if($search !== null || $page !== null){
             $this->validator($request->all())->validate();
 
             if($category !== "ALL") {
@@ -58,9 +78,11 @@ class OnlineProductController extends Controller
             if($min !== null){
                 $query->where('UNIT_PRICE','>',$min - 1);
             }
-
         }
         $products = $query->where('DELETE_FLG', 0)->paginate(10);
+
+
+        $request->session()->put("products",$products);
 
         return view('product.index', compact('products'))->with([
             'category'=>$category,
@@ -82,9 +104,12 @@ class OnlineProductController extends Controller
 
     public function stock (Request $request) {
         function returnView (Request $request, $message) {
-            if($message != null) {
-                return redirect('product/index')->with(['erred'=>$message])->withInput();
+            $products = $request->session()->get("products");
+            $page = $request->session()->get("page");
+            if($page != null) {
+                return redirect('product/index?page='. $page)->with(['erred'=>$message, 'products'=> $products])->withInput();
             }
+            return redirect('product/index?page=1')->with(['erred'=>$message, 'products'=> $products])->withInput();
         }
         $productsChecked = $request->input('check');
 
@@ -268,6 +293,9 @@ class OnlineProductController extends Controller
 
     public function confirm(Request $request){
         $cart = $request->session()->get("cartConfirm");
+        if($cart == null) {
+            return view('home');
+        }
         $query = OnlineProduct::select("*");
 
         $subtotal = 0;
@@ -310,7 +338,9 @@ class OnlineProductController extends Controller
             return view("auth.login");
         }
         $cartInfo = $request->session()->get("cartInfo");
-
+        if($cartInfo == []) {
+            return view('home');
+        };
         DB::transaction(function () use($cartInfo){
             $orderDB = new OnlineOrder;
             $orderListDB = new OnlineOrderList;
@@ -328,6 +358,7 @@ class OnlineProductController extends Controller
         });
         $request->session()->put("cart", []);
         $request->session()->put("cartInfo", []);
+        $request->session()->put("cartConfirm", []);
 
         return redirect()->action("OnlineProductController@viewComplete");
     }

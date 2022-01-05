@@ -30,6 +30,7 @@ Route::group(['prefix' => 'product'],function(){
     Route::post('cart', 'OnlineProductController@cartPost')->name('product.cartPost');
     Route::get('confirm', 'OnlineProductController@confirm')->name('product.confirm');
     Route::post('purchase', 'OnlineProductController@purchase')->name('product.purchase');
+    Route::get('purchase', 'OnlineProductController@purchase')->name('product.purchase');
     Route::get('complete', 'OnlineProductController@viewComplete')->name('product.complete');
 });
 

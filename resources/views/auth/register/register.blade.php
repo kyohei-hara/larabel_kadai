@@ -102,7 +102,7 @@
                             <label for="address" class="col-md-4 col-form-label text-md-right">住所</label>
 
                             <div class="col-md-6">
-                                <textarea id="address" name="address" class="md-textarea form-control {{ $errors->has('address') ? ' is-invalid' : '' }}" rows="3">{{ old('address') }}</textarea>
+                                <textarea id="address" name="address" required class="md-textarea form-control {{ $errors->has('address') ? ' is-invalid' : '' }}" rows="3">{{ old('address') }}</textarea>
                                  @if ($errors->has('address'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">
                                         <strong>{{ $errors->first('address') }}</strong>

@@ -56,6 +56,7 @@ class ValidatorServiceProvider extends ServiceProvider
             function ($attribute, $value, $parameters, $validator) {
                 return preg_match("/^[0-9\-]+$/u", $value);
             }
+
         );
          /**
          * 数値比較

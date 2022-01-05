@@ -51,7 +51,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return response()->view("errors.common");
+        return parent::render($request, $exception);
     }
 
     protected function renderHttpException(HttpExceptionInterface $e){
